@@ -1,0 +1,28 @@
+{
+  "name": "loplep-bot",
+  "version": "1.0.0",
+  "description": "A simple discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon -r dotenv/config ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArinoJenynof/loplep-bot.git"
+  },
+  "author": "Arino Jenynof",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArinoJenynof/loplep-bot/issues"
+  },
+  "homepage": "https://github.com/ArinoJenynof/loplep-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "eslint": "^7.10.0",
+    "nodemon": "^2.0.4"
+  }
+}
