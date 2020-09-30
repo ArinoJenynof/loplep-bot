@@ -6,8 +6,7 @@ module.exports = {
 	execute: (message) => {
 		const reply = [];
 		reply.push(`${message.author}`);
-		// reply.push("--today\tShow what happened today in LoveLive! history");
-		reply.push("**Ngetes cooldown asu**");
+		reply.push("--today\tShow what happened today in LoveLive! history");
 		message.channel.send(reply);
 	}
 }
