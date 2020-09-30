@@ -7,8 +7,8 @@ module.exports = {
 	execute: (message) => {
 		const reply = [];
 		reply.push(`${message.author}`);
-		message.client.commands.forEach((key, value) => {
-			reply.push(`${marker}${value}\n\t${key.description}`);
+		message.client.commands.forEach((command, command_name) => {
+			reply.push(`${marker}${command_name}\n\t${command.description}`);
 		})
 		message.channel.send(reply);
 	}
