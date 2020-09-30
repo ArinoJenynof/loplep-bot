@@ -29,8 +29,7 @@ client.on("message", (message) => {
 	let command_name = args.shift().slice(marker.length).toLowerCase();
 	if (!command_name) command_name = "help";
 
-	if (!client.commands.has(command_name))
-		return;
+	if (!client.commands.has(command_name)) return;
 	
 	const command = client.commands.get(command_name);
 	if (!cooldowns.has(command.name)) {

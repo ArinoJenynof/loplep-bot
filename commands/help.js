@@ -1,14 +1,15 @@
+const { marker } = require("../config/bot.js");
+
 module.exports = {
 	name: "help",
-	description: "Every command loplep-bot supports",
+	description: "Show this page",
 	usage: "--help",
-	cooldown: 10,
 	execute: (message) => {
 		const reply = [];
 		reply.push(`${message.author}`);
-		reply.push("This is `loplep-bot` supported commands");
-		reply.push("--help\n\tShow this help");
-		reply.push("--today\n\tShow what happened today in LoveLive! history");
+		message.client.commands.forEach((key, value) => {
+			reply.push(`${marker}${value}\n\t${key.description}`);
+		})
 		message.channel.send(reply);
 	}
 }
