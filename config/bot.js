@@ -1,3 +1,5 @@
 module.exports = {
-    prefix: "--",
+    userid: `${process.env.USERID}`,
+    botname: ".\\loplep",
+    marker: "--",
 }

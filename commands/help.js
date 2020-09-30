@@ -6,7 +6,9 @@ module.exports = {
 	execute: (message) => {
 		const reply = [];
 		reply.push(`${message.author}`);
-		reply.push("--today\tShow what happened today in LoveLive! history");
+		reply.push("This is `loplep-bot` supported commands");
+		reply.push("--help\n\tShow this help");
+		reply.push("--today\n\tShow what happened today in LoveLive! history");
 		message.channel.send(reply);
 	}
 }

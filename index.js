@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-const { prefix } = require("./config/bot.js");
+const { botname, userid, marker } = require("./config/bot.js");
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -14,11 +14,19 @@ for (const file of command_files) {
 }
 
 client.on("message", (message) => {
-	if (!message.content.startsWith(prefix) || message.author.bot)
+	if (message.author.bot) return;
+
+	let args;
+	if (message.content.startsWith(botname)) {
+		args = message.content.slice(botname.length).trim().split(/ +/);
+	} else if (message.content.startsWith(userid)) {
+		args = message.content.slice(userid.length).trim().split(/ +/);
+	} else {
 		return;
-	
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
-	const command_name = args.shift().toLowerCase();
+	}
+
+	let command_name = args.shift().slice(marker.length).toLowerCase();
+	if (!command_name) command_name = "help";
 
 	if (!client.commands.has(command_name))
 		return;
