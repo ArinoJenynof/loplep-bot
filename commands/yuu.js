@@ -1,12 +1,10 @@
 module.exports = {
-    name: 'yuu',
+    name: "yuu",
+    description: "Yuu is standing",
     usage: "--yuu",
-    cooldown: 10,
     execute: (message) => {
-        msg.channel.send('UwU',
-            {
-                file: './assets/shioriko.jpg'
-            }
-        )
+        const reply = [];
+        reply.push(`${message.author}`);
+        message.channel.send(reply, { files: ["./assets/yuu.png"] });
     }
-};
+}

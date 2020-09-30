@@ -1,12 +1,10 @@
 module.exports = {
-    name: 'shioriko',
-    usage: "--shioriko",
-    cooldown: 10,
+    name: "shioriko",
+    description: "Cute Student Council President",
+    usage: "--Shioriko",
     execute: (message) => {
-        msg.channel.send('UwU',
-            {
-                file: './assets/shioriko.jpg'
-            }
-        )
+        const reply = [];
+        reply.push(`${message.author}`);
+        message.channel.send(reply, { files: ["./assets/shioriko.jpg"] });
     }
-};
+}
