@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-const { botname, userid, marker } = require("./config/bot.js");
+const { botname, marker } = require("./config/bot.js");
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -9,10 +9,18 @@ const command_files = fs.readdirSync("./commands").filter(file => file.endsWith(
 const cooldowns = new Discord.Collection();
 const DEFAULT_COOLDOWN = 10;
 
+const roles = new Discord.Collection();
+
 for (const file of command_files) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
 }
+
+client.once("ready", () => {
+	client.guilds.cache.forEach((guild) => {
+		roles.set(guild.id, guild.roles.cache.find(role => role.name === client.user.username).id);
+	});
+});
 
 client.on("message", (message) => {
 	if (message.author.bot) return;
@@ -20,8 +28,10 @@ client.on("message", (message) => {
 	let args;
 	if (message.content.startsWith(botname)) {
 		args = message.content.slice(botname.length).trim().split(/ +/);
-	} else if (message.content.startsWith(userid)) {
-		args = message.content.slice(userid.length).trim().split(/ +/);
+	} else if (message.content.startsWith(`<@!${client.user.id}>`)) {
+		args = message.content.slice(`<@!${client.user.id}>`.length).trim().split(/ +/);
+	} else if (message.content.startsWith(`<@&${roles.get(message.guild.id)}>`)) {
+		args = message.content.slice(`<@&${roles.get(message.guild.id)}>`.length).trim().split(/ +/);
 	} else {
 		return;
 	}
@@ -32,7 +42,7 @@ client.on("message", (message) => {
 	if (!client.commands.has(command_name)) {
 		return message.channel.send(`${message.author}\n\`${marker}${command_name}\` command not found!`);
 	}
-	
+
 	const command = client.commands.get(command_name);
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());

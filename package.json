@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ArinoJenynof/loplep-bot#readme",
   "dependencies": {
+    "cron": "^1.8.2",
     "discord.js": "^12.3.1"
   },
   "devDependencies": {
