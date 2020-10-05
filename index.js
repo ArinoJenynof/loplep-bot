@@ -37,10 +37,9 @@ client.on("message", (message) => {
 	}
 
 	let command_name = args.shift().slice(marker.length).toLowerCase();
-	if (!command_name) command_name = "help";
 
 	if (!client.commands.has(command_name)) {
-		return message.channel.send(`${message.author}\n\`${marker}${command_name}\` command not found!`);
+		command_name = "help";
 	}
 
 	const command = client.commands.get(command_name);
