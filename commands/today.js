@@ -1,6 +1,7 @@
 module.exports = {
 	name: "today",
 	description: "Show what happened today in LoveLive! history",
+	usage: "--today",
 	execute: (message) => {
 		const reply = [];
 		reply.push(`${message.author}`);

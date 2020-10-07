@@ -1,20 +1,21 @@
-const { marker } = require("../config/bot.js");
-const embed = {
-	color: 0x009FE8
-};
+const { marker, message_embed, random, colours } = require("../config/bot.js");
+const reply = Object.create(message_embed);
 
 module.exports = {
 	name: "help",
-	description: "Show this page",
+	description: "Show command's function",
+	usage: "--help <?command>",
 	execute: (message, args) => {
-		if (args[0] !== "help" && message.client.commands.has(args[0])) {
+		reply["color"] = colours[random(colours.length)];
+		if (message.client.commands.has(args[0])) {
 			const command = message.client.commands.get(args[0]);
-			embed["description"] = `${command.description}`;
-			embed["title"] = `\`${marker}${command.name}\``;
+			reply["title"] = `\`${command.usage}\``;
+			reply["description"] = `${command.description}`;
 		} else {
-			embed["description"] = [...message.client.commands.keys()].map(el => `\`${marker}${el}\``).join(", ");
-			embed["title"] = "Supported Commands";
+			reply["title"] = "Supported Commands";
+			reply["description"] = "Use `--help <command>` to know command's function ^_^\n\n";
+			reply["description"] += [...message.client.commands.keys()].map(el => `\`${marker}${el}\``).join(", ");
 		}
-		message.channel.send(`${message.author}\n`, { embed });
+		message.channel.send(`${message.author}\n`, { message_embed: reply });
 	}
 }

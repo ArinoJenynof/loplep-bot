@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-const { botname, marker } = require("./config/bot.js");
+const { trigger, marker } = require("./config/bot.js");
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -26,8 +26,8 @@ client.on("message", (message) => {
 	if (message.author.bot) return;
 
 	let args;
-	if (message.content.startsWith(botname)) {
-		args = message.content.slice(botname.length).trim().split(/ +/);
+	if (message.content.startsWith(trigger)) {
+		args = message.content.slice(trigger.length).trim().split(/ +/);
 	} else if (message.content.startsWith(`<@!${client.user.id}>`)) {
 		args = message.content.slice(`<@!${client.user.id}>`.length).trim().split(/ +/);
 	} else if (message.content.startsWith(`<@&${roles.get(message.guild.id)}>`)) {
