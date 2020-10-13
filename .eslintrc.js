@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     "env": {
         "commonjs": true,
         "es2021": true,
@@ -6,7 +6,8 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": 12
+        "ecmaVersion": 12,
+        "sourceType": "module"
     },
     "rules": {
     }
