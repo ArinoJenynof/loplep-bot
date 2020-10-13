@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "shioriko",
 	description: "Cute Student Council President",
 	usage: "--shioriko",

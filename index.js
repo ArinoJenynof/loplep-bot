@@ -1,20 +1,22 @@
-const fs = require("fs");
-const Discord = require("discord.js");
-const { trigger, marker } = require("./config/bot.js");
+import { readdir } from "fs";
+import Discord from "discord.js";
+import { trigger, marker } from "./config/bot.js";
 
 const client = new Discord.Client();
-client.commands = new Discord.Collection();
-const command_files = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
-
 const cooldowns = new Discord.Collection();
-const DEFAULT_COOLDOWN = 10;
-
 const roles = new Discord.Collection();
 
-for (const file of command_files) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-}
+client.commands = new Discord.Collection();
+readdir("./commands", async (err, files) => {
+	if (err) {
+		console.error(err);
+	} else {
+		for (const file of files) {
+			const { default: command } = await import(`./commands/${file}`);
+			client.commands.set(command.name, command);
+		}
+	}
+});
 
 client.once("ready", () => {
 	client.guilds.cache.forEach((guild) => {
@@ -48,7 +50,7 @@ client.on("message", (message) => {
 	}
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
-	const cooldown_amount = (command.cooldown || DEFAULT_COOLDOWN) * 1000;
+	const cooldown_amount = (command.cooldown || 10) * 1000;
 
 	if (timestamps.has(message.author.id)) {
 		const expiration = timestamps.get(message.author.id) + cooldown_amount;

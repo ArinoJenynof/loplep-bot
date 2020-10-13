@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "yuu",
 	description: "Yuu is standing",
 	usage: "--yuu",
