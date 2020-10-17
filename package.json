@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple discord bot",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,5 +27,18 @@
     "dotenv": "^8.2.0",
     "eslint": "^7.10.0",
     "nodemon": "^2.0.4"
+  },
+  "eslintConfig": {
+    "env": {
+      "commonjs": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {}
   }
 }

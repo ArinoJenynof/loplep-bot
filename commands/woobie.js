@@ -1,8 +1,9 @@
-const fs = require("fs");
-const gifs = fs.readdirSync("./assets/woobie");
-const { random } = require("../config/bot.js");
+import { readdirSync } from "fs";
+import { random } from "../config/bot.js";
 
-module.exports = {
+const gifs = readdirSync("./assets/woobie");
+
+export default {
 	name: "woobie",
 	description: "Send u a woobie on drugs pic",
 	usage: "--woobie",

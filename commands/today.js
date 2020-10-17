@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	name: "today",
 	description: "Show what happened today in LoveLive! history",
 	usage: "--today",
