@@ -1,4 +1,4 @@
-export default {
+export const command = {
 	name: "today",
 	description: "Show what happened today in LoveLive! history",
 	usage: "--today",

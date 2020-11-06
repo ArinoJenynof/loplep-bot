@@ -12,9 +12,10 @@ readdir("./commands", async (err, files) => {
 		console.error(err);
 	} else {
 		for (const file of files) {
-			const { default: command } = await import(`./commands/${file}`);
+			const { command } = await import(`./commands/${file}`);
 			client.commands.set(command.name, command);
 		}
+		client.login(process.env.TOKEN);
 	}
 });
 
@@ -69,5 +70,3 @@ client.on("message", (message) => {
 		message.reply("There was an error trying to execute that command!");
 	}
 });
-
-client.login(process.env.TOKEN);

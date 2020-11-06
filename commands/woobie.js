@@ -3,7 +3,7 @@ import { random } from "../config/bot.js";
 
 const gifs = readdirSync("./assets/woobie");
 
-export default {
+export const command = {
 	name: "woobie",
 	description: "Send u a woobie on drugs pic",
 	usage: "--woobie",

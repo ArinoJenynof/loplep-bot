@@ -1,7 +1,7 @@
 import { marker, author, random, colours } from "../config/bot.js";
 const reply = {}
 
-export default {
+export const command = {
 	name: "help",
 	description: "Show command's function",
 	usage: "--help [command]",

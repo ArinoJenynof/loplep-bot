@@ -1,4 +1,4 @@
-export default {
+export const command = {
 	name: "shioriko",
 	description: "Cute Student Council President",
 	usage: "--shioriko",

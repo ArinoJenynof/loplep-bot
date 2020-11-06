@@ -1,4 +1,4 @@
-export default {
+export const command = {
 	name: "yuu",
 	description: "Yuu is standing",
 	usage: "--yuu",
