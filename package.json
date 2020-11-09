@@ -41,5 +41,8 @@
       "sourceType": "module"
     },
     "rules": {}
+  },
+  "engines": {
+    "node": "15.1.0"
   }
 }
