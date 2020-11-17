@@ -1,4 +1,4 @@
-import { readdir } from "fs";
+import { readdir } from "fs/promises";
 import Discord from "discord.js";
 import { trigger, marker } from "./config/bot.js";
 
@@ -7,17 +7,18 @@ const cooldowns = new Discord.Collection();
 const roles = new Discord.Collection();
 
 client.commands = new Discord.Collection();
-readdir("./commands", async (err, files) => {
-	if (err) {
-		console.error(err);
-	} else {
-		for (const file of files) {
-			const { command } = await import(`./commands/${file}`);
+readdir("./commands").then((files) => {
+	const promises = [];
+	for (const file of files) {
+		promises.push(import(`./commands/${file}`).then((module) => {
+			const { command } = module;
 			client.commands.set(command.name, command);
-		}
-		client.login(process.env.TOKEN);
+		}));
 	}
-});
+	Promise.all(promises).then(() => {
+		client.login(process.env.TOKEN);
+	});
+}).catch(console.error);
 
 client.once("ready", () => {
 	client.guilds.cache.forEach((guild) => {
