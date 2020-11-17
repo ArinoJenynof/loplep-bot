@@ -10,13 +10,17 @@ export const command = {
 		embed["title"] = "PC Releases Database";
 		embed["fields"] = [];
 		const count = args[0] || 20;
-		const response = await axios.get(`https://predb.ovh/api/v1/?q=@cat%20GAMES-PC&count=${count}`);
-		for (const row of response.data.data.rows) {
-			embed["fields"].push({
-				name: row["name"],
-				value: new Date(row["preAt"] * 1000).toISOString()
-			});
+		try {
+			const response = await axios.get(`https://predb.ovh/api/v1/?q=@cat%20GAMES-PC&count=${count}`);
+			for (const row of response.data.data.rows) {
+				embed["fields"].push({
+					name: row["name"],
+					value: new Date(row["preAt"] * 1000).toISOString()
+				});
+			}
+			message.channel.send(`${message.author}`, { embed });
+		} catch (error) {
+			console.error(error);
 		}
-		message.channel.send(`${message.author}`, { embed });
 	}
 }
