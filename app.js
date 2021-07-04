@@ -21,10 +21,8 @@ client.once("ready", () => {
 });
 
 client.on("message", message => {
-	console.log(message.content);
 	const startsWithTrigger = () => {
 		for (const trigger of [...triggers, roles.get(message.guild.id)]) {
-			console.log(trigger);
 			if (message.content.startsWith(trigger)) {
 				message.content = message.content.substr(trigger.length);
 				return true;
