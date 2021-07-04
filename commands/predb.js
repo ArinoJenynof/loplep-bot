@@ -1,26 +1,41 @@
-import { createEmbed } from "../config/bot.js";
-import axios from "axios";
+import https from "https";
+import { MessageEmbed } from "discord.js";
+import { author, colours } from "../core/config";
 
-export const command = {
-	name: "predb",
-	description: "Scene releases database",
-	usage: "--predb [count]",
-	execute: async (message, args) => {
-		const embed = createEmbed();
-		embed["title"] = "PC Releases Database";
-		embed["fields"] = [];
-		const count = args[0] || 20;
-		try {
-			const response = await axios.get(`https://predb.ovh/api/v1/?q=@cat%20GAMES-PC&count=${count}`);
-			for (const row of response.data.data.rows) {
-				embed["fields"].push({
-					name: row["name"],
-					value: new Date(row["preAt"] * 1000).toISOString()
-				});
-			}
-			message.channel.send(`${message.author}`, { embed });
-		} catch (error) {
-			console.error(error);
+const name = "predb";
+const description = "PC Releases Database";
+const usage = "predb";
+
+/**
+ * GET from predb.ovh API
+ * @param {import("discord.js").Message} message 
+ */
+function execute(message) {
+	https.get("https://predb.ovh/api/v1/?q=@cat%20GAMES-PC", (res) => {
+		const { statusCode } = res;
+		if (statusCode < 200 || statusCode > 299) {
+			console.error(`Request Failed (${statusCode})`);
+			res.resume();
+			return;
 		}
-	}
+
+		res.setEncoding("utf8");
+		let rawData = "";
+		res.on("data", chunk => { rawData += chunk });
+		res.on("end", () => {
+			const embed = new MessageEmbed();
+			embed.setAuthor(...author);
+			embed.setColor(colours[Math.floor(Math.random() * colours.length)]);
+			embed.setTimestamp();
+			embed.setTitle("PC Releases Database");
+			
+			const parsedData = JSON.parse(rawData);
+			for (const row of parsedData.data.rows) {
+				embed.addField(row["name"], new Date(row["preAt"] * 1000).toISOString());
+			}
+			message.channel.send(`${message.author}`, { embed }).catch(console.error);
+		});
+	}).on("error", (err) => { console.error(err) });
 }
+
+export default { name, description, usage, execute };

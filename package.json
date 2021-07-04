@@ -1,12 +1,11 @@
 {
   "name": "loplep-bot",
-  "version": "1.0.0",
-  "description": "A simple discord bot",
-  "main": "index.js",
+  "version": "0.0.2",
+  "description": "A simple Discord bot",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon -r dotenv/config ."
   },
   "repository": {
@@ -20,30 +19,14 @@
   },
   "homepage": "https://github.com/ArinoJenynof/loplep-bot#readme",
   "dependencies": {
-    "axios": "^0.21.0",
-    "cron": "^1.8.2",
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.5.3"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
-    "eslint": "^7.10.0",
-    "nodemon": "^2.0.4"
-  },
-  "eslintConfig": {
-    "env": {
-      "commonjs": true,
-      "es2021": true,
-      "node": true
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 12,
-      "sourceType": "module"
-    },
-    "rules": {}
+    "dotenv": "^10.0.0",
+    "eslint": "^7.29.0",
+    "nodemon": "^2.0.7"
   },
   "engines": {
-    "node": "15.1.0",
-    "npm": "7.0.8"
+    "node": "7.18.1"
   }
 }
