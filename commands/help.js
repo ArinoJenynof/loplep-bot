@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { author, colours, triggers } from "../core/config";
+import { author, colours, triggers } from "../core/config.js";
 
 const name = "help";
 const description = "List all commands";

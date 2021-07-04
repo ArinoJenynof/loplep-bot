@@ -1,6 +1,6 @@
 import https from "https";
 import { MessageEmbed } from "discord.js";
-import { author, colours } from "../core/config";
+import { author, colours } from "../core/config.js";
 
 const name = "predb";
 const description = "PC Releases Database";
