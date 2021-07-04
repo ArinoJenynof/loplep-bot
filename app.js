@@ -14,14 +14,17 @@ for (const [key, value] of Object.entries(exported)) {
 client.once("ready", () => {
 	client.guilds.cache.each(guild => {
 		const role = guild.roles.cache.find(role => role.name === client.user.username);
-		roles.set(guild.id, `${role}`);
+		roles.set(guild.id, `<@&${role.id}>`);
 	});
-	triggers.push(`${client.user}`);
+	triggers.push(`<@!${client.user.id}>`);
+	triggers.push(`<@${client.user.id}>`);
 });
 
 client.on("message", message => {
+	console.log(message.content);
 	const startsWithTrigger = () => {
 		for (const trigger of [...triggers, roles.get(message.guild.id)]) {
+			console.log(trigger);
 			if (message.content.startsWith(trigger)) {
 				message.content = message.content.substr(trigger.length);
 				return true;
@@ -36,7 +39,7 @@ client.on("message", message => {
 	const req = args.shift().toLowerCase();
 
 	if (!client.commands.has(req)) {
-		return;
+		client.commands.get("help").execute(message, args);
 	} else {
 		client.commands.get(req).execute(message, args);
 	}
