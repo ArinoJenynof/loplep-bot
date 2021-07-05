@@ -19,15 +19,25 @@ client.once("ready", () => {
 	triggers.push(`<@!${client.user.id}>`);
 	triggers.push(`<@${client.user.id}>`);
 
-	const waitFor = (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now();
-	setTimeout(() => {
+	const submitTACountdown = () => {
 		const guild = client.guilds.cache.get("730017966963425280");
+		if (typeof guild === "undefined") return;
 		const channel = guild.channels.cache.get("860002595678060554");
+		if (typeof channel === "undefined") return;
 
 		const now = new Date();
 		const deadline = new Date(2021, 6, 9, 14);
-		channel.setName(`${deadline.getDate() - now.getDate()}hari${deadline.getHours() - now.getHours()}jam-submit-ta`);
-	}, waitFor);
+		if (deadline.getTime() < now.getTime()) {
+			return;
+		} else if (deadline.getTime() - now.getTime() < 3.6e6) {
+			channel.setName(`${deadline.getMinutes() - now.getMinutes()}menit-submit-ta`);
+			setTimeout(submitTACountdown, (Math.ceil(Date.now() / 6e4) * 6e4));
+		} else {
+			channel.setName(`${deadline.getDate() - now.getDate()}hari${deadline.getHours() - now.getHours()}jam-submit-ta`);
+			setTimeout(submitTACountdown, (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now());
+		}
+	}
+	setTimeout(submitTACountdown, (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now());
 });
 
 client.on("message", message => {
