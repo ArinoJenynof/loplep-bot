@@ -26,16 +26,39 @@ client.once("ready", () => {
 		if (typeof channel === "undefined") return;
 
 		const now = new Date();
-		const deadline = new Date(2021, 6, 9, 14);
-		if (deadline.getTime() < now.getTime()) {
-			return;
-		} else if (deadline.getTime() - now.getTime() < 3.6e6) {
-			channel.setName(`${deadline.getMinutes() - now.getMinutes()}menit-submit-ta`);
-			setTimeout(submitTACountdown, (Math.ceil(Date.now() / 6e4) * 6e4));
-		} else {
-			channel.setName(`${deadline.getDate() - now.getDate()}hari${deadline.getHours() - now.getHours()}jam-submit-ta`);
-			setTimeout(submitTACountdown, (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now());
+		const deadline = new Date(2021, 6, 9, 13);
+
+		let daysLeft = deadline.getDate() - now.getDate();
+		let hoursLeft = deadline.getHours() - now.getHours();
+		// let minutesLeft = deadline.getMinutes() - now.getMinutes();
+
+		if (hoursLeft < 0) {
+			hoursLeft = deadline.getHours() + 24 - now.getHours();
+			daysLeft--;
 		}
+
+		let strTime = "";
+		if (daysLeft > 0) {
+			strTime += `${daysLeft}hari`;
+		}
+		if (hoursLeft > 0) {
+			strTime += `${hoursLeft}jam`;
+		}
+		if (daysLeft < 0 && hoursLeft === 0) {
+			strTime += "waktunya";
+		}
+
+		channel.setName(strTime + "-submit-ta");
+		if (deadline.getTime() < now.getTime()) return;
+		setTimeout(submitTACountdown, (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now());
+
+		// if (deadline.getTime() - now.getTime() < 3.6e6) {
+		// 	channel.setName(`${deadline.getMinutes() - now.getMinutes()}menit-submit-ta`);
+		// 	setTimeout(submitTACountdown, (Math.ceil(Date.now() / 6e4) * 6e4));
+		// } else {
+		// 	channel.setName(`${deadline.getDate() - now.getDate()}hari${deadline.getHours() - now.getHours()}jam-submit-ta`);
+		// 	setTimeout(submitTACountdown, (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now());
+		// }
 	}
 	setTimeout(submitTACountdown, (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now());
 });
