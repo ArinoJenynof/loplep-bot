@@ -18,6 +18,16 @@ client.once("ready", () => {
 	});
 	triggers.push(`<@!${client.user.id}>`);
 	triggers.push(`<@${client.user.id}>`);
+
+	const waitFor = (Math.ceil(Date.now() / 3.6e6) * 3.6e6) - Date.now();
+	setTimeout(() => {
+		const guild = client.guilds.cache.get("730017966963425280");
+		const channel = guild.channels.cache.get("860002595678060554");
+
+		const now = new Date();
+		const deadline = new Date(2021, 6, 9, 14);
+		channel.setName(`${deadline.getDate() - now.getDate()}hari${deadline.getHours() - now.getHours()}jam-submit-ta`);
+	}, waitFor);
 });
 
 client.on("message", message => {
