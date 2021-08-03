@@ -21,7 +21,7 @@ function execute(message) {
 
 		res.setEncoding("utf8");
 		let rawData = "";
-		res.on("data", chunk => { rawData += chunk });
+		res.on("data", (chunk) => { rawData += chunk });
 		res.on("end", () => {
 			const embed = new MessageEmbed();
 			embed.setAuthor(...author);
@@ -33,7 +33,7 @@ function execute(message) {
 			for (const row of parsedData.data.rows) {
 				embed.addField(row["name"], new Date(row["preAt"] * 1000).toISOString());
 			}
-			message.channel.send(`${message.author}`, { embed }).catch(console.error);
+			message.channel.send(embed).catch(console.error);
 		});
 	}).on("error", (err) => { console.error(err) });
 }
