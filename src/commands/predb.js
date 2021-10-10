@@ -1,6 +1,5 @@
 import https from "https";
-import { MessageEmbed } from "discord.js";
-import { author, colours } from "../config.js";
+import { responseEmbed } from "../helper/embed-builder.js";
 
 export default {
 	name: "predb",
@@ -21,9 +20,7 @@ export default {
 			let rawData = "";
 			res.on("data", (chunk) => { rawData += chunk });
 			res.on("end", () => {
-				const embed = new MessageEmbed()
-					.setAuthor(...author)
-					.setColor(colours[Math.floor(Math.random() * colours.length)])
+				const embed = responseEmbed()
 					.setTimestamp()
 					.setTitle("***Scene Release Database***")
 					.setFooter("Data collected from predb.ovh");
@@ -31,7 +28,7 @@ export default {
 				JSON.parse(rawData).data.rows.forEach((row) => {
 					embed.addField(row.name, new Date(row.preAt * 1000).toISOString());
 				});
-				message.channel.send({ embeds: [embed] });
+				message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
 			});
 		}).on("error", (err) => { console.error(err) });
 	}

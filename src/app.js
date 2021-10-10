@@ -1,6 +1,7 @@
-import { Client, Collection, Intents, MessageEmbed } from "discord.js";
+import { Client, Collection, Intents } from "discord.js";
+import { prefix } from "./config.js";
 import * as aggregated from "./helper/command-aggregator.js";
-import { prefix, colours, author } from "./config.js";
+// import { responseEmbed } from "./helper/embed-builder.js";
 
 const commands = new Collection();
 Object.entries(aggregated).forEach(([commandName, command]) => {
@@ -24,36 +25,38 @@ client.on("ready", (client) => {
 client.on("messageCreate", (message) => {
 	if (message.author.bot) return;
 
-	const userId = new RegExp(`<@!?${client.user.id}>`);
+	const userId = new RegExp(`^<@!?${client.user.id}>$`);
+
 	if (message.content.match(userId) !== null) {
-		message.reply(`This server prefix is \`.\\${prefix}\``);
+		message.reply({
+			content: `My prefix is \`${prefix}\``,
+			allowedMentions: { repliedUser: false }
+		});
 	} else if (message.content.startsWith(prefix)) {
 		const args = message.content.slice(prefix.length).trim().split(/ +/);
 		const command = args.shift().toLowerCase();
 
-		if (command === "help") {
-			const embed = new MessageEmbed()
-				.setAuthor(...author)
-				.setColor(colours[Math.floor(Math.random() * colours.length)])
-				.setTimestamp()
-				.setFooter("I Can (Not) Code");
+		// if (command === "help") {
+		// 	const embed = responseEmbed()
+		// 		.setTimestamp()
+		// 		.setFooter("I Can (Not) Code");
 
-			if (args.length > 0) {
-				if (commands.has(args[0])) {
-					const res = commands.get(args[0]);
-					embed.setTitle(`\`${res.usage}\``)
-						.setDescription(res.description);
-				} else {
-					embed.setTitle("***404 Not Found***")
-						.setDescription("Use `.\\help` for complete list of commands");
-				}
-			} else {
-				embed.setTitle("***All supported commands***")
-					.setDescription(Array.from(commands.keys()).map(el => `\`${el}\``).join(", "));
-			}
+		// 	if (args.length > 0) {
+		// 		if (commands.has(args[0])) {
+		// 			const res = commands.get(args[0]);
+		// 			embed.setTitle(`\`${res.usage}\``)
+		// 				.setDescription(res.description);
+		// 		} else {
+		// 			embed.setTitle("***404 Not Found***")
+		// 				.setDescription("Use `.\\help` for complete list of commands");
+		// 		}
+		// 	} else {
+		// 		embed.setTitle("***All supported commands***")
+		// 			.setDescription(Array.from(commands.keys()).map(el => `\`${el}\``).join(", "));
+		// 	}
 
-			message.channel.send({ embeds: [embed] });
-		}
+		// 	message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
+		// }
 
 		if (commands.has(command)) {
 			try {
