@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node .",
-    "watch": "nodemon -r dotenv/config ."
+    "watch": "nodemon -r dotenv/config .",
+    "deploy": "node -r dotenv/config ./src/deploy.js"
   },
   "repository": {
     "type": "git",
@@ -19,14 +20,17 @@
   },
   "homepage": "https://github.com/ArinoJenynof/loplep-bot#readme",
   "dependencies": {
-    "discord.js": "^13.1.0"
+    "@discordjs/builders": "^0.7.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.24.0",
+    "discord.js": "^13.2.0"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.14"
   },
   "engines": {
-    "node": "16.7.0"
+    "node": "17.0.0"
   }
 }
