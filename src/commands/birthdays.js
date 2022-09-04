@@ -1,14 +1,15 @@
 import https from "https";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { author, colours } from "../config.js";
+import { author, colours } from "../info.js";
 
 const month = [
 	"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
 ];
 
-export default {
+export const birthdays = {
 	data: new SlashCommandBuilder().setName("birthdays").setDescription("Show this month birthdays"),
+
 	execute(interaction) {
 		interaction.deferReply();
 		https.get("https://loplep-hub.000webhostapp.com/api/characters/", (res) => {
@@ -23,12 +24,12 @@ export default {
 			let rawData = "";
 			res.on("data", (chunk) => { rawData += chunk });
 			res.on("end", () => {
-				const embed = new MessageEmbed()
-					.setAuthor(...author)
+				const embed = new EmbedBuilder()
+					.setAuthor(author)
 					.setColor(colours[Math.floor(Math.random() * colours.length)])
 					.setTimestamp()
 					.setTitle(`***${month[new Date().getMonth()]} Birthdays***`)
-					.setFooter("buon compleanno");
+					.setFooter({ text: "buon compleanno" });
 
 				const thisMonth = new Date().getUTCMonth();
 				JSON.parse(rawData)
@@ -52,7 +53,7 @@ export default {
 						}
 					})
 					.forEach((row) => {
-						embed.addField(row.name, `${month[row.birthday[1] - 1]} ${row.birthday[2]}`);
+						embed.addFields({ name: row.name, value: `${month[row.birthday[1] - 1]} ${row.birthday[2]}` });
 				});
 
 				interaction.editReply({ embeds: [embed] });
