@@ -1,14 +1,21 @@
+import { Routes } from "discord.js";
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
-import commands from "./loader.js";
 
-const deployed = Object.values(commands).map(command => command.data.toJSON());
+import { predb } from "./commands/predb.js";
+import { birthdays } from "./commands/birthdays.js"
 
-const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
+const commands = [
+	predb.data,
+	birthdays.data
+].map(command => command.toJSON());
 
-const guilds = process.env.GUILD_ID.split(",");
+const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
-guilds.forEach((guild) => {
-	console.log(`client: deploying to ${guild}`);
-	rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guild), { body: deployed }).catch(console.error);
+process.env.GUILD_ID.split(",").forEach(async (guildId) => {
+	try {
+		const data = await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId), { body: commands });
+		console.log(`Registered ${data.length} commands to ${guildId}`);
+	} catch (error) {
+		console.error(error);
+	}
 });
