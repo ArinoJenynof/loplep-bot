@@ -2,7 +2,6 @@
   "name": "loplep-bot",
   "version": "0.0.2",
   "description": "A simple Discord bot",
-  "main": "./src/app.js",
   "type": "module",
   "scripts": {
     "start": "node -r dotenv/config ."
@@ -21,7 +20,7 @@
     "discord.js": "^14.9.0"
   },
   "devDependencies": {
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.0.3",
     "eslint": "^8.38.0"
   }
 }
