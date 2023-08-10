@@ -4,7 +4,8 @@
   "description": "A simple Discord bot",
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config ."
+    "start": "node -r dotenv/config .",
+    "deploy": "node -r dotenv/config ./utils/deployCommands.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
   },
   "homepage": "https://github.com/ArinoJenynof/loplep-bot#readme",
   "dependencies": {
-    "discord.js": "^14.9.0"
+    "discord.js": "^14.9.0",
+    "puppeteer": "^21.0.1"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",
